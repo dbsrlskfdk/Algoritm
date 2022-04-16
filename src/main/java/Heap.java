@@ -10,16 +10,16 @@ public class Heap {
     전달해주는 배열 A의 크기를 N 이라고 한다면, N-1로 넘겨줘야한다.
     배열 A = {0, ~~} 맨앞에 0을 채워서 인덱스를 하나씩 늘려주고, 판단하게 하는 것이 쉬움.
      */
-    int N;
-    ArrayList<Integer> A;
-    Heap(ArrayList<Integer> A, int N){
+    private int N;
+    private ArrayList<Integer> A;
+    Heap(ArrayList<Integer> A, int N){ // Heap 클래스의 Constructor 로써, 생성과 동시에 받은 ArrayList 의 값들을 힙성질을 만족하도록 Heap 구조로 바꿔준다.
         this.N = N;
         this.A = A;
         for (int i = N/2; i > 0 ; i--) {
             heapify(A, i, this.N); // 이진 배열을 받았을 때, 이것을 힙으로 만들어주는 작업을 바로 수행
         }
     }
-    void heap_show(){
+    void heap_show(){ // Heap 구조에 맞춰서 보여주기.
         for (int i = 1; i <= N/2  ; i++) {
             System.out.println("i = " + i + " , A[i] : " + A.get(i));
             if (2 * i <= N){
@@ -55,6 +55,12 @@ public class Heap {
 
 
     }
+    void heap_sort(){ // Heap을 이용한 Sort -> Heap 성질을 만족하도록 힙을 구성했으면, 맨 처음 루트 노드(가장 작은 값)와, 맨 마지막 리프 노드(가장 큰 값)는 일 것이기에, 둘의자리를 바꿔주고, 맨 처음 루트노드를 출력해주면 작은 순으로 출력한다.
+        for (int i = N; i >= 2 ; i--) {
+            Collections.swap(A, i, 1);
+            heapify(A, 1, i-1);
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -66,6 +72,12 @@ public class Heap {
         }
         Heap heap = new Heap(A, A.size() - 1); // 파라미터 넘겨줄 떄, 실제 A 사이즈 에서 한개 뺀(인덱스를 늘려주기 위해 사용된 0) 값을 넘겨주기.
         heap.heap_show();
+
+        // =======================
+        System.out.println("After Heap_sort");
+        heap.heap_sort();
+        heap.heap_show();
+        System.out.println("ArrayList A : "+ A.subList(1, A.size()));
     }
 }
 
