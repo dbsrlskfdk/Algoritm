@@ -1,3 +1,5 @@
+import javafx.scene.Parent;
+
 public class BinarySearchTree {
     Node root = null;
     public void Insert_Node(int data){
@@ -92,7 +94,26 @@ public class BinarySearchTree {
         (2). 해당 노드를 삭제할 노드의 자리로 올려주고, 삭제할 노드는 삭제
         (3). 그 후 해당 노드의 서브 트리를 그 노드의 parent 노드와 연결 시켜줌.
          */
+            //삭제할 노드의 값 중 크지만 가장 작은 값을 탐색하는 방식으로 구성해보자
+            Node swap_Node;
+            Node swap_Parent_Node;
 
+            swap_Parent_Node = delNode;
+            swap_Node = delNode.right; // swap_Node는 delNode 보다 큰 값 중에
+
+            while(swap_Node.left != null){ // 계속 왼쪽으로 가다가, null이 나오면 더 작은 값이 없다는 것이기에
+                swap_Parent_Node = swap_Node; // swap하고 다시 이어주기 위해, swap_Parent_Node 를 저장해두고
+                swap_Node = swap_Node.left; // 더 작은 값이 있으면, 왼쪽으로 감.
+            }
+
+
+            if (parentDelNode.right == delNode){
+                parentDelNode.right.value = swap_Node.value;
+
+            }else{
+                parentDelNode.left.value = swap_Node.value;
+            }
+            swap_Parent_Node.left = swap_Node.right;
         }
 
 
