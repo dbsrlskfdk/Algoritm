@@ -5,14 +5,22 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Knapsack {
-    static int knapsack(int i, int W, ArrayList<Integer[]> A) {
+    static int knapsack(int i, int W, ArrayList<Integer[]> A, int indent) {
         if (i < 0){
+            String inde = "\t".repeat(indent);
+            System.out.println(inde+"Knapsack["+i +","+W+"]");
             return 0;
         }
         if (A.get(i)[0] > W){
-            return knapsack(i-1, W, A);
+            String inde = "\t".repeat(indent);
+            System.out.println(inde+"Knapsack["+i +","+W+"]");
+            System.out.println(inde+"W : "+ W + ", " + "Weight : "+A.get(i)[0]);
+            return knapsack(i-1, W, A, indent+1);
         }else{
-            return Math.max(knapsack(i - 1, W, A), knapsack(i - 1, W - A.get(i)[0], A) + A.get(i)[1]);
+            String inde = "\t".repeat(indent);
+            System.out.println(inde+"Knapsack["+i +","+W+"]");
+            System.out.println(inde+"W : "+ W + ", " + "Weight : "+A.get(i)[0]);
+            return Math.max(knapsack(i - 1, W, A, indent+1), knapsack(i - 1, W - A.get(i)[0], A,indent+1) + A.get(i)[1]);
         }
     }
     public static void main(String[] args) throws IOException {
@@ -21,6 +29,7 @@ public class Knapsack {
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
+        int indent = 0;
 
         ArrayList<Integer[]> A = new ArrayList<>();
 
@@ -36,7 +45,7 @@ public class Knapsack {
             System.out.println("i : "+i +", W : "+A.get(i)[0]+", V : "+A.get(i)[1]);
         }*/
 
-        System.out.println(knapsack(N-1, K, A));
+        System.out.println(knapsack(N-1, K, A, indent));
     }
 
 
