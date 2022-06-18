@@ -12,6 +12,7 @@ public class Knapsack_DP {
 
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
+        int[][] dp = new int[N+1][K+1];
 
         ArrayList<Integer[]> A = new ArrayList<>();
 
@@ -22,5 +23,15 @@ public class Knapsack_DP {
 
             A.add(new Integer[]{W, V});
         }
+        for (int i = 1; i < N+1; i++) {
+            for (int j = 1; j < K+1; j++) {
+                if(j - A.get(i-1)[0] >= 0){
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j - A.get(i-1)[0]] + A.get(i-1)[1]);
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        System.out.println(dp[N-1][K]);
     }
 }
